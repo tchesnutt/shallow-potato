@@ -1,11 +1,12 @@
 # Setting up Django
 
----
-
 _Mac Only_
 
 ---
-1) Install homebrew
+1) Install homebrew. A package manager of MacOS.
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
 
 2) Install python
 ```
