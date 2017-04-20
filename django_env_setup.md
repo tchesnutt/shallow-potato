@@ -1,7 +1,10 @@
 # Setting up Django
+
 ---
+
 _Mac Only_
-----
+
+---
 1) Install homebrew
 
 2) Install python
