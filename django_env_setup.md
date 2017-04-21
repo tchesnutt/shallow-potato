@@ -37,7 +37,7 @@ If the source command is not available, you can try using a dot instead:
 ```
 . ~/.virtualenvs/djangodev/bin/activate
 ```
-Now, with the env activated, install Django with:
+4) Now, with the env activated, install Django with:
 ```
 pip install Django
 ```
