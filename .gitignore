@@ -1,2 +1,3 @@
-chessai/hand/chromedriver
-chessai/util/login.json
+/games
+/src/test.py
+/src/__pycache__
