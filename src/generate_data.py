@@ -1,8 +1,12 @@
+import os
 from utils import *
 
-path = "./games/magnus.pgn"
 
-game_list = parse_games(path)
+game_list = []
+
+for filename in os.listdir("./data/openings"):
+    if filename.endswith(".pgn"):
+        game_list.append(parse_games(path))
 
 
 for game in game_list:
