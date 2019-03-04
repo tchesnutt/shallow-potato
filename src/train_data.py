@@ -25,8 +25,7 @@ class TrainData:
 			board = chess.Board()
 			moves = game.moves
 
-			# flip if black winner
-			# advance a move?
+			
 			result = game.headers["Result"]
 			if result[0] == "1":
 				board.push(moves.f(moves.start.variations[0]))
@@ -47,5 +46,6 @@ class TrainData:
 			# iterate through winner's moves
 			for m_i, move in moves:
 				uci_move = move.uci()
+				
 				from_uci, to_uci = uci_move[:2], uci_move[2:4]
 				board.push(move)
