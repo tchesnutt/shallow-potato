@@ -1,5 +1,6 @@
 import numpy as np
 import chess
+from utils import *
 
 
 class TrainData:
@@ -33,19 +34,14 @@ class TrainData:
 			else:
 				moves = enumerate(moves)
 
-			# Board object:
-			# r n b q k b n r
-			# p p p p p p p p
-			# . . . . . . . .
-			# . . . . . . . .
-			# . . . . . . . .
-			# . . . . . . . .
-			# P P P P P P P P
-			# R N B Q K B N R
-
-			# iterate through winner's moves
 			for m_i, move in moves:
+				if m_i % 2 == 1:
+					pass
 				uci_move = move.uci()
 				
 				from_uci, to_uci = uci_move[:2], uci_move[2:4]
+				from_cart, to_cart = uci_cell_to_cartesian(from_uci), uci_cell_to_cartesian(to_uci)
+				
+				
+				
 				board.push(move)

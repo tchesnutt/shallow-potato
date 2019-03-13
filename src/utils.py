@@ -1,5 +1,5 @@
 import chess.pgn
-
+import numpy as np
 
 PIECE_TO_INDEX = {
     'P': 0,
@@ -28,7 +28,7 @@ CART_TO_UCI_CELL = {
     7: 'h',
 }
 
-UCI_CELL_TO_CART= {
+UCI_CELL_TO_CART = {
     'a': 0,
     'b': 1,
     'c': 2,
@@ -39,11 +39,13 @@ UCI_CELL_TO_CART= {
     'h': 7,
 }
 
-
-# parses games from a pgn file and returns a list of games
-
+MATRIX_SIZE = (8, 8, 6)
 
 def parse_games(file_name):
+    """
+    return type list[...games]
+    takes in a string and parses all games in that file
+    """
     pgn_file = open(file_name, encoding='utf-8', errors='replace')
     game = chess.pgn.read_game(pgn_file)
     game_list = []
@@ -69,3 +71,23 @@ def uci_cell_to_cartesian(uci_cell):
         result = [5, 0]
     """
     return  [8 - int(uci_cell[1]), UCI_CELL_TO_CART[uci_cell[0]]]
+
+def board_to_matrix(board):
+    """
+    return type numpy arraylike
+    takes in a chess.board and returns a 8,8,6 representation of the board
+    """
+    board = np.array(list(str(board).replace('\n', '').replace(' ', ''))).reshape((8, 8))
+    matrix = np.zeros(MATRIX_SIZE)
+
+    for i in range(MATRIX_SIZE[0]):
+        for j in range(MATRIX_SIZE[1]):
+            piece = board[i,j]
+            if piece == ".":
+                continue
+            if piece.isuper():
+                matrix[i, j, PIECE_TO_INDEX[piece]] = 1
+            else:
+                matrix[i, j, PIECE_TO_INDEX[piece.upper()]] = 1
+    
+    return matrix
