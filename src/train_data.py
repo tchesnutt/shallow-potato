@@ -6,22 +6,22 @@ from utils import *
 class TrainData:
 	def __init__(self, games):
 		self.games = games
-		self.x_train = None
-		self.y_train = None
-		self.x_e = None
-		self.y_e = None
-		self.x_K = None
-		self.y_K = None
-		self.x_B = None
-		self.y_B = None
-		self.x_R = None
-		self.y_R = None
-		self.x_Q = None
-		self.y_Q = None
-		self.x_N = None
-		self.y_N = None
+		self.x_train = np.empty()
+		self.y_train = np.empty()
+		self.x_e = np.empty()
+		self.y_e = np.empty()
+		self.x_K = np.empty()
+		self.y_K = np.empty()
+		self.x_B = np.empty()
+		self.y_B = np.empty()
+		self.x_R = np.empty()
+		self.y_R = np.empty()
+		self.x_Q = np.empty()
+		self.y_Q = np.empty()
+		self.x_N = np.empty()
+		self.y_N = np.empty()
 
-	def process():
+	def process(self):
 		for _, game in enumerate(self.games):
 			board = chess.Board()
 			moves = game.moves
@@ -42,6 +42,19 @@ class TrainData:
 				from_uci, to_uci = uci_move[:2], uci_move[2:4]
 				from_cart, to_cart = uci_cell_to_cartesian(from_uci), uci_cell_to_cartesian(to_uci)
 				
+				m = board_to_matrix(board)
 				
-				
+				index = np.where(m[from_cart] != 0)
+				piece = INDEX_TO_PIECE[index]
+
+				piece_x = "self.x_%d" % piece
+				piece_y = "self.y_%d" % piece
+				piece_x = eval(piece_x)
+				piece_y = eval(piece_y)
+
+				self.x_train.append(m)
+				self.x_train.append(from_cart)
+				self.piece_x.append(m)
+				self.piece_y.append(to_cart)
+
 				board.push(move)
