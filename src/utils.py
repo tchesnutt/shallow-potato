@@ -91,3 +91,21 @@ def board_to_matrix(board):
                 matrix[i, j, PIECE_TO_INDEX[piece.upper()]] = 1
     
     return matrix
+
+def flip(matrix):
+    """
+    returns a matrix rotated about the horizontal plane
+    also inverts the peice designation between white and black
+    """
+    matrix = matrix[::-1, :, :]
+    whites = np.where(matrix == 1)
+    blacks = np.where(matrix == -1)
+    matrix[whites] = -1
+    matrix[blacks] = -1
+    return matrix
+
+def flip_cart_coords(coord):
+    """
+    returns cartestian coordinates rotated about the horizontal plane
+    """
+    return [8 - coord[0] -1, coord[1]]

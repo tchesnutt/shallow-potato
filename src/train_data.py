@@ -29,20 +29,26 @@ class TrainData:
 			
 			result = game.headers["Result"]
 			if result[0] == "1":
-				board.push(moves.f(moves.start.variations[0]))
-				moves = enumerate(moves, 1)
+				# black winner 
+				winner = 0
 			else:
-				moves = enumerate(moves)
+				# white winner 
+				winner = 1
 
-			for m_i, move in moves:
-				if m_i % 2 == 1:
+			for m_i, move in enumerate(moves):
+				if m_i % 2 == winner:
 					pass
 				uci_move = move.uci()
 				
 				from_uci, to_uci = uci_move[:2], uci_move[2:4]
 				from_cart, to_cart = uci_cell_to_cartesian(from_uci), uci_cell_to_cartesian(to_uci)
-				
 				m = board_to_matrix(board)
+
+				if winner = 0:
+					m = flip(m)
+					from_cart = flip_cart_coords(from_cart)
+					to_cart = flip_cart_coords(to_cart)
+				
 				
 				index = np.where(m[from_cart] != 0)
 				piece = INDEX_TO_PIECE[index]
