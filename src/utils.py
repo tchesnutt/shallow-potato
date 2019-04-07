@@ -85,7 +85,7 @@ def board_to_matrix(board):
             piece = board[i,j]
             if piece == ".":
                 continue
-            if piece.isuper():
+            if piece.isupper():
                 matrix[i, j, PIECE_TO_INDEX[piece]] = 1
             else:
                 matrix[i, j, PIECE_TO_INDEX[piece.upper()]] = 1
