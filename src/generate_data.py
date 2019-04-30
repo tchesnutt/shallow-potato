@@ -2,7 +2,7 @@ import os
 import pickle
 
 from train_data import *
-# from validate_data import *
+from validate_data import *
 from utils import *
 
 """
@@ -54,10 +54,10 @@ for file_name in os.listdir("./data/games"):
                 train_games.append(game)
 
         trainer = TrainData(train_games)
-        # validator = ValidatData(validate_games)
+        validator = ValidateData(validate_games)
 
         trainer.process()
-        # validator.process()
+        validator.process()
 
         for file_type in train_file_types:
             file_name = f"{file_type}_{file_count}"
@@ -68,9 +68,10 @@ for file_name in os.listdir("./data/games"):
             pickle.dump(eval(call), training_file)
             training_file.close()
 
-        # print("Saving validation data")
-        # validation_file = open("validation_data%d" % (file_count / 3), 'wb')
-        # pickle.dump(validate_games, validation_file)
-        # validation_file.close()
+        validation_name = f"valid_{file_count}"
+        print("Saving " + validation_name)
+        validation_file = open("./data/parsed/" + file_name, 'wb')
+        pickle.dump(validator.x_valid, validation_file)
+        validation_file.close()
 
         file_count += 1

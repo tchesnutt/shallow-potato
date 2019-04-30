@@ -61,4 +61,5 @@ class TrainData:
                 self.y_train.append(from_cart)
                 piece_x.append(m)
                 piece_y.append(to_cart)
+                
                 board.push(move)
