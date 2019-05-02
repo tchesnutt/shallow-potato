@@ -52,6 +52,8 @@ class TrainData:
                 index = np.where(m[from_cart] != 0)
                 piece = INDEX_TO_PIECE[index[0][0]]
 
+                m = np.rollaxis(m, 2, 0)
+
                 piece_x = "self.x_" + piece
                 piece_y = "self.y_" + piece
                 piece_x = eval(piece_x)

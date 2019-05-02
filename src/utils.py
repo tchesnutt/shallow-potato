@@ -68,9 +68,9 @@ def uci_cell_to_cartesian(uci_cell):
     """
     ex. 
         uci_cell = f8
-        result = [5, 0]
+        result = (5, 0)
     """
-    return  [8 - int(uci_cell[1]), UCI_CELL_TO_CART[uci_cell[0]]]
+    return  (8 - int(uci_cell[1]), UCI_CELL_TO_CART[uci_cell[0]])
 
 def board_to_matrix(board):
     """
@@ -88,7 +88,7 @@ def board_to_matrix(board):
             if piece.isupper():
                 matrix[i, j, PIECE_TO_INDEX[piece]] = 1
             else:
-                matrix[i, j, PIECE_TO_INDEX[piece.upper()]] = 1
+                matrix[i, j, PIECE_TO_INDEX[piece.upper()]] = -1
     
     return matrix
 
@@ -101,11 +101,11 @@ def flip(matrix):
     whites = np.where(matrix == 1)
     blacks = np.where(matrix == -1)
     matrix[whites] = -1
-    matrix[blacks] = -1
+    matrix[blacks] = 1
     return matrix
 
 def flip_cart_coords(coord):
     """
     returns cartestian coordinates rotated about the horizontal plane
     """
-    return [8 - coord[0] -1, coord[1]]
+    return (8 - coord[0] -1, coord[1])
