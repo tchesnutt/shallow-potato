@@ -28,6 +28,8 @@ class ValidateData:
 
 				if winner == 0:
 					m = flip(m)
+
+				m = np.rollaxis(m, 2, 0)
 				
 				self.x_valid.append(m)
 
