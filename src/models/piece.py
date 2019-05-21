@@ -46,7 +46,7 @@ class Piece(Model):
             activation_fn=None,
         )
 
-        softmax = tf.nn.softmax(
+        self.probs = tf.nn.softmax(
             affine,
             axis=1,
         )
