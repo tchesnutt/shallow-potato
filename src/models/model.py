@@ -9,9 +9,9 @@ class Model:
     def construct(self):
         raise NotImplementedError
     
-    def save(self, session):
+    def save(self, sess):
         print('Saving model...')
-        self.saver.sav(session, self.config.path)
+        self.saver.sav(sess, self.config.path)
         
 
     def init_saver(self):

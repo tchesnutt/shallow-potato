@@ -39,6 +39,9 @@ UCI_CELL_TO_CART = {
     'h': 7,
 }
 
+TRAIN_FILE_TYPES = ['picker_x', 'p_x', 'K_x', 'B_x', 'R_x', 'Q_x',
+                    'N_x', 'picker_y', 'P_y', 'K_y', 'B_y', 'R_y', 'Q_y', 'N_y']
+
 MATRIX_SIZE = (8, 8, 6)
 
 def parse_games(file_name):

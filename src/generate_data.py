@@ -24,17 +24,13 @@ if percentage == "":
 file_count = 0
 num_g = 0
 
-x_train, y_train = [], []
-x_e, y_e = [], []
-x_K, y_K = [], []
-x_B, y_B = [], []
-x_R, y_R = [], []
-x_Q, y_Q = [], []
-x_N, y_N = [], []
-
-train_file_types = ['x_train', 'x_P', 'x_K', 'x_B', 'x_R', 'x_Q',
-                    'x_N', 'y_train', 'y_P', 'y_K', 'y_B', 'y_R', 'y_Q', 'y_N']
-
+# x_train, y_train = [], []
+# x_e, y_e = [], []
+# x_K, y_K = [], []
+# x_B, y_B = [], []
+# x_R, y_R = [], []
+# x_Q, y_Q = [], []
+# x_N, y_N = [], []
 
 for file_name in os.listdir("./data/games"):
     if file_name.endswith(".pgn"):

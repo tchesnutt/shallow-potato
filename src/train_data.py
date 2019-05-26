@@ -1,25 +1,18 @@
 import numpy as np
 import chess
+
 from utils import *
 
 
 class TrainData:
     def __init__(self, games):
         self.games = games
-        self.x_train = []
-        self.y_train = []
-        self.x_P = []
-        self.y_P = []
-        self.x_K = []
-        self.y_K = []
-        self.x_B = []
-        self.y_B = []
-        self.x_R = []
-        self.y_R = []
-        self.x_Q = []
-        self.y_Q = []
-        self.x_N = []
-        self.y_N = []
+        self.initData()
+
+    def initData(self):
+        for data_name in TRAIN_FILE_TYPES:
+            self.data_name = []
+
 
     def process(self):
         for _, game in enumerate(self.games):
@@ -59,8 +52,8 @@ class TrainData:
                 piece_x = eval(piece_x)
                 piece_y = eval(piece_y)
 
-                self.x_train.append(m)
-                self.y_train.append(from_cart)
+                self.picker_x.append(m)
+                self.picker_y.append(from_cart)
                 piece_x.append(m)
                 piece_y.append(to_cart)
                 
