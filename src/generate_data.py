@@ -55,7 +55,7 @@ for file_name in os.listdir("./data/games"):
         trainer.process()
         validator.process()
 
-        for file_type in train_file_types:
+        for file_type in TRAIN_FILE_TYPES:
             file_name = f"{file_type}_{file_count}"
             call = f"trainer.{file_type}"
 

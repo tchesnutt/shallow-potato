@@ -11,8 +11,7 @@ class TrainData:
 
     def initData(self):
         for data_name in TRAIN_FILE_TYPES:
-            self.data_name = []
-
+            self.__setattr__(data_name, [])
 
     def process(self):
         for _, game in enumerate(self.games):
@@ -47,8 +46,8 @@ class TrainData:
 
                 m = np.rollaxis(m, 2, 0)
 
-                piece_x = "self.x_" + piece
-                piece_y = "self.y_" + piece
+                piece_x = "self." + piece + "_x"
+                piece_y = "self." + piece + "_y"
                 piece_x = eval(piece_x)
                 piece_y = eval(piece_y)
 
