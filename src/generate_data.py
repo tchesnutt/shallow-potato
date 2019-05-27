@@ -59,13 +59,13 @@ for file_name in os.listdir("./data/games"):
             file_name = f"{file_type}_{file_count}"
             call = f"trainer.{file_type}"
 
-            print("Saving " + file_name + "\n")
+            print("Saving " + file_name)
             training_file = open("./data/parsed/" + file_name, 'wb')
             pickle.dump(eval(call), training_file)
             training_file.close()
 
         validation_name = f"valid_{file_count}"
-        print("Saving " + validation_name)
+        print("Saving " + validation_name +"\n")
         validation_file = open("./data/parsed/" + file_name, 'wb')
         pickle.dump(validator.x_valid, validation_file)
         validation_file.close()
