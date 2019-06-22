@@ -1,5 +1,8 @@
+import os
 import chess.pgn
+import json
 import numpy as np
+from bunch import Bunch
 
 PIECE_TO_INDEX = {
     'P': 0,
@@ -112,3 +115,16 @@ def flip_cart_coords(coord):
     returns cartestian coordinates rotated about the horizontal plane
     """
     return (8 - coord[0] -1, coord[1])
+
+def get_config_from_json(json_file):
+    with open(json_file, 'r') as c_file:
+        c_dict = json.load(c_file)
+    config = Bunch(c_dict)
+
+    return config, c_dict
+
+def process_config(json_file):
+    config, _ = get_config_from_json(json_file)
+    config.summery_dir = os.path.join("../experiments", config.exp_name, "summery/")
+
+    return config

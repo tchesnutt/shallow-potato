@@ -2,10 +2,12 @@ import os
 import pickle
 import tensorflow as tf
 
+from utils import *
+
 
 model_key = {
     'P': 'piece',
-    'N': 'piece',
+    # 'N': 'piece',
     # 'B': 'piece',
     # 'R': 'piece',
     # 'Q': 'piece.',
@@ -13,9 +15,6 @@ model_key = {
     # 'picker': 'file_name'
 }
 
-config = {
-    'path': './models'
-}
 
 def initModels(model_key):
     models = {}
@@ -35,22 +34,27 @@ def initTrainers(model_key):
 
 def getDataFile(model_name):
     files = []
-    for file_name in os.listdir("./data/parsed"):
+    for file_name in os.listdir("./data/parsed/"):
         if file_name.startswith(model_name):
-            files.append("./data/parsed" + file_name)
+            files.append("./data/parsed/" + file_name)
     return files
 
 def loadDataFile(file_name):
-    file = open(file_name)
+    file = open(file_name, 'rb')
     return pickle.load(file)
 
 
 
 if __name__ == "__main__":
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
     models = initModels(model_key)
     trainers = initTrainers(model_key)
 
     for model_name, model_instance in models.items():
+        config_file = "./src/configs/" + model_key[model_name] + ".json"
+        config = process_config(config_file)
+    
         files = getDataFile(model_name)
 
         sess = tf.Session()

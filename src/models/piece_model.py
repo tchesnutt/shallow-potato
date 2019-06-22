@@ -12,12 +12,12 @@ class Piece(Model):
 
     def construct(self):
         # Shape [batch, in_depth, in_height, in_width, in_channels]
-        input_layer = tf.placeholder(int, [-1, 6, 8, 8, 1])
+        input_layer = tf.placeholder(tf.float16, [1, 6, 8, 8])
 
         conv1 = tf.layers.conv2d(
             inputs=input_layer,
             filters=96,
-            kernel_size=[3],
+            kernel_size=[3,3],
             strides=1,
             padding="same",
             activation=tf.nn.relu,
@@ -26,7 +26,7 @@ class Piece(Model):
         conv2 = tf.layers.conv2d(
             inputs=conv1,
             filters=256,
-            kernel_size=[3],
+            kernel_size=[3,3],
             strides=1,
             padding="same",
             activation=tf.nn.relu,
@@ -35,7 +35,7 @@ class Piece(Model):
         conv3 = tf.layers.conv2d(
             inputs=conv2,
             filters=384,
-            kernel_size=[3],
+            kernel_size=[3,3],
             strides=1,
             padding="same",
             activation=tf.nn.relu,
