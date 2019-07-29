@@ -43,6 +43,26 @@ def loadDataFile(file_name):
     file = open(file_name, 'rb')
     return pickle.load(file)
 
+def getNumericEnd(string):
+    i = 1
+    while string[-1].isdigit():
+        i += 1
+    return int(string[-i-1:-1])
+
+def parse_fileobjs(filenames):
+    parsed_files = []
+    for filename in filenames:
+        model, something, series = filename.split('_')
+        parsed_files.append({
+            "filename": filename,
+            "series": series,
+            "type": something,
+        })
+    return parsed_files
+
+    
+def sort_files(fileobj):
+    return (fileobj["series"], fileobj["type"])
 
 
 if __name__ == "__main__":
@@ -61,8 +81,14 @@ if __name__ == "__main__":
         model = model_instance(config)
         trainer = trainers[model_name](model, config)
 
-        for file in files:
-            trainer.data = loadDataFile(file)
+        parsed_fileobjs = parse_fileobjs(files)
+        sorted_files = sorted(parsed_fileobjs, key=sort_files)
+        sorted_files = [file["filename"] for file in sorted_files]
+        
+        file_pairs = zip(sorted_files[::2], sorted_files[1::2])
+
+        for pair in file_pairs:
+            trainer.data = (loadDataFile(pair[0]), loadDataFile(pair[1]))
             trainer.train()
             
-        model.save()
+        model.save(sess)

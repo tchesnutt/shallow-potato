@@ -53,9 +53,9 @@ class Piece(Model):
         )
 
     def init_saver(self):
-        self.saver = tf.train.Saver(max_to_keep=self.config.max_to_keep)
+        self.saver = tf.compat.v1.train.Saver(max_to_keep=self.config.max_to_keep)
 
     def save(self, sess):
         # TODO: put model name in here
         print('Saving model...')
-        self.saver.sav(sess, self.config.path)
+        self.saver.save(sess, self.config.path)

@@ -11,4 +11,7 @@ class Model:
     def init_saver(self):
         raise NotImplementedError
 
+    def save(self):
+        raise NotImplementedError
+
     
