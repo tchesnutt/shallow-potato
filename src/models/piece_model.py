@@ -12,10 +12,11 @@ class Piece(Model):
 
     def construct(self):
         # Shape [batch, in_depth, in_height, in_width, in_channels]
-        input_layer = tf.placeholder(tf.float16, [1, 6, 8, 8])
+        self.x = tf.placeholder(tf.float16, [1, 6, 8, 8])
+        self.y = tf.placeholder(tf.float16, [1, 6, 8, 64])
 
         conv1 = tf.layers.conv2d(
-            inputs=input_layer,
+            inputs=self.x,
             filters=96,
             kernel_size=[3,3],
             strides=1,
@@ -51,6 +52,16 @@ class Piece(Model):
             affine,
             axis=1,
         )
+
+        with tf.name_scope("loss"):
+            print(self.probs)
+            print(self.y)
+            self.cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=self.y, logits = self.probs))
+            print(self.cross_entropy)
+            correct_prediction = tf.equal(tf.argmax(self.probs,1), tf.argmax(self.y, 1))
+            self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float16))
+            print(self.accuracy)
+
 
     def init_saver(self):
         self.saver = tf.compat.v1.train.Saver(max_to_keep=self.config.max_to_keep)

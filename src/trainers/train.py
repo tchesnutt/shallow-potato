@@ -6,6 +6,7 @@ class Train:
         self.model = model
         self.data = None
         self.config = config
+        self.init = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
 
     def train(self):
         raise NotImplementedError

@@ -43,12 +43,6 @@ def loadDataFile(file_name):
     file = open(file_name, 'rb')
     return pickle.load(file)
 
-def getNumericEnd(string):
-    i = 1
-    while string[-1].isdigit():
-        i += 1
-    return int(string[-i-1:-1])
-
 def parse_fileobjs(filenames):
     parsed_files = []
     for filename in filenames:
@@ -79,7 +73,7 @@ if __name__ == "__main__":
 
         sess = tf.Session()
         model = model_instance(config)
-        trainer = trainers[model_name](model, config)
+        trainer = trainers[model_name](sess, model, config)
 
         parsed_fileobjs = parse_fileobjs(files)
         sorted_files = sorted(parsed_fileobjs, key=sort_files)
@@ -88,7 +82,7 @@ if __name__ == "__main__":
         file_pairs = zip(sorted_files[::2], sorted_files[1::2])
 
         for pair in file_pairs:
-            trainer.data = (loadDataFile(pair[0]), loadDataFile(pair[1]))
-            trainer.train()
+            data = (loadDataFile(pair[0]), loadDataFile(pair[1]))
+            trainer.train(data)
             
         model.save(sess)
