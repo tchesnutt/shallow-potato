@@ -16,7 +16,7 @@ model_key = {
 }
 
 
-def initModels(model_key):
+def init_models(model_key):
     models = {}
     for k, v in model_key.items():
         module = __import__('models.'+ v + '_model', fromlist=[v + '_model'])
@@ -24,7 +24,7 @@ def initModels(model_key):
         models[k] = model
     return models
 
-def initTrainers(model_key):
+def init_trainers(model_key):
     trainers = {}
     for k, v in model_key.items(): 
         module = __import__('trainers.' + v + '_trainer', fromlist=[v + '_trainer'])
@@ -32,14 +32,14 @@ def initTrainers(model_key):
         trainers[k] = trainer
     return trainers
 
-def getDataFile(model_name):
+def get_data_file(model_name):
     files = []
     for file_name in os.listdir("./data/parsed/"):
         if file_name.startswith(model_name):
             files.append("./data/parsed/" + file_name)
     return files
 
-def loadDataFile(file_name):
+def load_data_file(file_name):
     file = open(file_name, 'rb')
     return pickle.load(file)
 
@@ -62,14 +62,14 @@ def sort_files(fileobj):
 if __name__ == "__main__":
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-    models = initModels(model_key)
-    trainers = initTrainers(model_key)
+    models = init_models(model_key)
+    trainers = init_trainers(model_key)
 
     for model_name, model_instance in models.items():
         config_file = "./src/configs/" + model_key[model_name] + ".json"
         config = process_config(config_file)
     
-        files = getDataFile(model_name)
+        files = get_data_file(model_name)
 
         sess = tf.Session()
         model = model_instance(config)
@@ -82,7 +82,7 @@ if __name__ == "__main__":
         file_pairs = zip(sorted_files[::2], sorted_files[1::2])
 
         for pair in file_pairs:
-            data = (loadDataFile(pair[0]), loadDataFile(pair[1]))
+            data = (load_data_file(pair[0]), load_data_file(pair[1]))
             trainer.train(data)
             
         model.save(sess)
