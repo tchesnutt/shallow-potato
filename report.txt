@@ -1,0 +1,140 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 12 files
+Detected 4 issues that require attention
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+File: src/run.py
+--------------------------------------------------------------------------------
+src/run.py:88:8: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+--------------------------------------------------------------------------------
+File: src/trainers/piece_trainer.py
+--------------------------------------------------------------------------------
+src/trainers/piece_trainer.py:28:14: WARNING: Changing dataset.make_initializable_iterator() to tf.compat.v1.data.make_initializable_iterator(dataset). Please check this transformation.
+
+--------------------------------------------------------------------------------
+File: src/models/piece_model.py
+--------------------------------------------------------------------------------
+src/models/piece_model.py:45:17: ERROR: Using member tf.contrib.layers.fully_connected in deprecated module tf.contrib. tf.contrib.layers.fully_connected cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+src/models/piece_model.py:68:8: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+================================================================================
+Detailed log follows:
+
+================================================================================
+================================================================================
+Input tree: 'src/'
+================================================================================
+--------------------------------------------------------------------------------
+Processing file 'src/generate_data.py'
+ outputting to 'src_tf2/generate_data.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/validate_data.py'
+ outputting to 'src_tf2/validate_data.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/train_data.py'
+ outputting to 'src_tf2/train_data.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/gameLib.py'
+ outputting to 'src_tf2/gameLib.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/test.py'
+ outputting to 'src_tf2/test.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/run.py'
+ outputting to 'src_tf2/run.py'
+--------------------------------------------------------------------------------
+
+74:15: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+88:8: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/__init__.py'
+ outputting to 'src_tf2/__init__.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/utils.py'
+ outputting to 'src_tf2/utils.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/trainers/piece_trainer.py'
+ outputting to 'src_tf2/trainers/piece_trainer.py'
+--------------------------------------------------------------------------------
+
+28:14: WARNING: Changing dataset.make_initializable_iterator() to tf.compat.v1.data.make_initializable_iterator(dataset). Please check this transformation.
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/trainers/train.py'
+ outputting to 'src_tf2/trainers/train.py'
+--------------------------------------------------------------------------------
+
+9:29: INFO: Renamed 'tf.global_variables_initializer' to 'tf.compat.v1.global_variables_initializer'
+9:64: INFO: Renamed 'tf.local_variables_initializer' to 'tf.compat.v1.local_variables_initializer'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/models/piece_model.py'
+ outputting to 'src_tf2/models/piece_model.py'
+--------------------------------------------------------------------------------
+
+15:17: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+16:17: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+18:16: INFO: Renamed 'tf.layers.conv2d' to 'tf.compat.v1.layers.conv2d'
+27:16: INFO: Renamed 'tf.layers.conv2d' to 'tf.compat.v1.layers.conv2d'
+36:16: INFO: Renamed 'tf.layers.conv2d' to 'tf.compat.v1.layers.conv2d'
+45:17: ERROR: Using member tf.contrib.layers.fully_connected in deprecated module tf.contrib. tf.contrib.layers.fully_connected cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+56:13: INFO: `name` passed to `name_scope`. Because you may be re-entering an existing scope, it is not safe to convert automatically,  the v2 name_scope does not support re-entering scopes by name.
+
+56:13: INFO: Renamed 'tf.name_scope' to 'tf.compat.v1.name_scope'
+57:33: INFO: Added keywords to args of function 'tf.reduce_mean'
+57:48: INFO: Changing labels arg of tf.nn.softmax_cross_entropy_with_logits to tf.stop_gradient(labels). Please check this transformation.
+
+58:42: INFO: Added keywords to args of function 'tf.argmax'
+58:67: INFO: Added keywords to args of function 'tf.argmax'
+59:28: INFO: Added keywords to args of function 'tf.reduce_mean'
+68:8: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'src/models/model.py'
+ outputting to 'src_tf2/models/model.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+

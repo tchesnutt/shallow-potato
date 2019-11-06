@@ -71,7 +71,7 @@ if __name__ == "__main__":
     
         files = get_data_file(model_name)
 
-        sess = tf.Session()
+        sess = tf.compat.v1.Session()
         model = model_instance(config)
         trainer = trainers[model_name](sess, model, config)
 
@@ -84,5 +84,6 @@ if __name__ == "__main__":
         for pair in file_pairs:
             data = (load_data_file(pair[0]), load_data_file(pair[1]))
             trainer.train(data)
-            
+        
+        # TODO  WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
         model.save(sess)

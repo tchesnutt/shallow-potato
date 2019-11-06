@@ -14,4 +14,3 @@ class Model:
     def save(self):
         raise NotImplementedError
 
-    
