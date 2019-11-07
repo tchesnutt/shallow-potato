@@ -10,7 +10,17 @@ class Piece(Model):
         self.construct()
         self.init_saver()
 
+
     def construct(self):
+        model = tf.keras.Sequential()
+        model.add(tf.keras.layers.Conv2D(96, (3, 3), activation='relu', input_shape=(6, 8, 8), padding="same"))
+        model.add(tf.keras.layers.Conv2D(256, (3, 3), activation='relu', input_shape=(6, 8, 8), padding="same"))
+        model.add(tf.keras.layers.Conv2D(384, (3, 3), activation='relu', input_shape=(6, 8, 8), padding="same"))
+        model.add(tf.keras.layers.Dense(32, activation=None))
+
+        model.summary()
+
+    def construct_old(self):
         # Shape [batch, in_depth, in_height, in_width, in_channels]
         self.x = tf.compat.v1.placeholder(tf.float16, [1, 6, 8, 8])
         self.y = tf.compat.v1.placeholder(tf.float16, [1, 6, 8, 64])
