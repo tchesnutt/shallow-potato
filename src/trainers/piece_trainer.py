@@ -9,26 +9,20 @@ class PieceTrainer(Train):
         self.sess = sess
 
     
+    def prep_train(self):
+        print(self.model.model)
+        self.model.model.compile(loss='mean_squared_error', optimizer='sgd')
+
+
     def train(self, data):
         x, train_y = data
-        print("hi")
         x = np.array(x)
-        print(type(x))
-        print(x.shape)
+        train_y = np.array(train_y)
+
+        train_dataset = tf.data.Dataset.from_tensor_slices((x, train_y))
+        self.model.model.fit(train_dataset)
+
+
+    def train_step(self, data):
         
-        
-        
-
-        
-        train_x = tf.data.Dataset.from_tensor_slices(x.ravel())
-        print(type(train_x))
-        print(train_x)
-
-
-        itr = tf.compat.v1.data.make_initializable_iterator(train_x)
-        el = itr.get_next()
-
-
-        feed_dict = { self.model.x: train_x, self.model.y: train_y }
-        _, loss, acc = self.sess.run(itr.initializer, [self.model.config.train_step, self.model.cross_entropy, self.model.accuracy])
-        return loss, acc
+        return

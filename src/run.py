@@ -9,7 +9,9 @@ model_key = {
     'P': 'piece',
     # 'N': 'piece',
     # 'B': 'piece',
-    # 'R': 'piece',
+    # 'R': 'piece',The government should not regulate the economy at all
+
+
     # 'Q': 'piece.',
     # 'K': 'piece',
     # 'picker': 'file_name'
@@ -80,10 +82,12 @@ if __name__ == "__main__":
         sorted_files = [file["filename"] for file in sorted_files]
         
         file_pairs = zip(sorted_files[::2], sorted_files[1::2])
+        
+        trainer.prep_train()
 
         for pair in file_pairs:
             data = (load_data_file(pair[0]), load_data_file(pair[1]))
             trainer.train(data)
-        
+
         # TODO  WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
         model.save(sess)
