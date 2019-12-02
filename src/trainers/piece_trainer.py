@@ -15,11 +15,13 @@ class PieceTrainer(Train):
 
 
     def train(self, data):
-        x, train_y = data
+        x, y = data
         x = np.array(x)
-        train_y = np.array(train_y)
+        x = np.expand_dims(x, axis=1)
+        y = np.array(y)
+        
+        train_dataset = tf.data.Dataset.from_tensor_slices((x, y))
 
-        train_dataset = tf.data.Dataset.from_tensor_slices((x, train_y))
         self.model.model.fit(train_dataset)
 
 

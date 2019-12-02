@@ -13,9 +13,9 @@ class Piece(Model):
 
     def construct(self):
         model = tf.keras.Sequential()
-        model.add(tf.keras.layers.Conv2D(96, (3, 3), activation='relu', input_shape=(6, 8, 8), padding="same"))
+        model.add(tf.keras.layers.Conv2D(96, (3, 3), strides=1,  activation='relu', input_shape=(6, 8, 8), padding="same", data_format="channels_first" ))
         model.add(tf.keras.layers.Dense(256, activation=None))
-        model.add(tf.keras.layers.Dense(64, activation='softmax'))
+        model.add(tf.keras.layers.Dense(8, activation='softmax'))
         model.summary()
         self.model = model
 

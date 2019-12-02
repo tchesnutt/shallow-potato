@@ -9,10 +9,8 @@ model_key = {
     'P': 'piece',
     # 'N': 'piece',
     # 'B': 'piece',
-    # 'R': 'piece',The government should not regulate the economy at all
-
-
-    # 'Q': 'piece.',
+    # 'R': 'piece',
+    # 'Q': 'piece',
     # 'K': 'piece',
     # 'picker': 'file_name'
 }

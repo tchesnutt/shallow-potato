@@ -47,6 +47,8 @@ TRAIN_FILE_TYPES = ['picker_x', 'P_x', 'K_x', 'B_x', 'R_x', 'Q_x',
 
 MATRIX_SIZE = (8, 8, 6)
 
+
+
 def parse_games(file_name):
     """
     return type list[...games]
@@ -61,6 +63,7 @@ def parse_games(file_name):
     return game_list
 
 
+
 def cartesian_to_uci_cell(coordinates):
     """
     return type string
@@ -70,6 +73,8 @@ def cartesian_to_uci_cell(coordinates):
     """
     return CART_TO_UCI_CELL[coordinates[1]] + str(8 - coordinates[0])
 
+
+
 def uci_cell_to_cartesian(uci_cell):
     """
     ex. 
@@ -77,6 +82,8 @@ def uci_cell_to_cartesian(uci_cell):
         result = (5, 0)
     """
     return  (8 - int(uci_cell[1]), UCI_CELL_TO_CART[uci_cell[0]])
+
+
 
 def board_to_matrix(board):
     """
@@ -95,8 +102,10 @@ def board_to_matrix(board):
                 matrix[i, j, PIECE_TO_INDEX[piece]] = 1
             else:
                 matrix[i, j, PIECE_TO_INDEX[piece.upper()]] = -1
-    
+
     return matrix
+
+
 
 def flip(matrix):
     """
@@ -110,11 +119,15 @@ def flip(matrix):
     matrix[blacks] = 1
     return matrix
 
+
+
 def flip_cart_coords(coord):
     """
     returns cartestian coordinates rotated about the horizontal plane
     """
     return (8 - coord[0] -1, coord[1])
+
+
 
 def get_config_from_json(json_file):
     with open(json_file, 'r') as c_file:
@@ -122,6 +135,8 @@ def get_config_from_json(json_file):
     config = Bunch(c_dict)
 
     return config, c_dict
+
+
 
 def process_config(json_file):
     config, _ = get_config_from_json(json_file)
