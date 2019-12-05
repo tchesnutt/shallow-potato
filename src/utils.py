@@ -143,3 +143,12 @@ def process_config(json_file):
     config.summery_dir = os.path.join("../experiments", config.exp_name, "summery/")
 
     return config
+
+
+
+def coord_to_prob_dist(coord, layer):
+    x, y = coord
+    matrix = np.zeros(MATRIX_SIZE)
+    matrix[x, y, layer] = 1
+    matrix = np.rollaxis(matrix, 2, 0)
+    return matrix

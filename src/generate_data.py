@@ -66,7 +66,7 @@ for file_name in os.listdir("./data/games"):
 
         validation_name = f"valid_{file_count}"
         print("Saving " + validation_name +"\n")
-        validation_file = open("./data/parsed/" + file_name, 'wb')
+        validation_file = open("./data/parsed/" + validation_name, 'wb')
         pickle.dump(validator.x_valid, validation_file)
         validation_file.close()
 
