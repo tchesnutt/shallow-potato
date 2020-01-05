@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 
 from trainers.train import Train
-from utils import coord_to_prob_dist
+from utils import coord_to_prob_dist, flatten_coord
 
 
 
@@ -26,7 +26,7 @@ class PieceTrainer(Train):
 
         y = []
         for i in y_coord:
-            y.append(coord_to_prob_dist(i, self.layer))
+            y.append(flatten_coord(i))
         y = np.array(y)
         
         train_dataset = tf.data.Dataset.from_tensor_slices((x, y))

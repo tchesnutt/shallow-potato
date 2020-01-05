@@ -129,6 +129,23 @@ def flip_cart_coords(coord):
 
 
 
+def coord_to_prob_dist(coord, layer):
+    """
+    returns 8x8x6 prob distribution for a coordinate
+    """
+    x, y = coord
+    matrix = np.zeros(MATRIX_SIZE)
+    matrix[x, y, layer] = 1
+    matrix = np.rollaxis(matrix, 2, 0)
+    return matrix
+
+
+
+def flatten_coord(coord):
+	return ((8 * coord[0]) + coord[1])
+
+
+
 def get_config_from_json(json_file):
     with open(json_file, 'r') as c_file:
         c_dict = json.load(c_file)
@@ -143,12 +160,3 @@ def process_config(json_file):
     config.summery_dir = os.path.join("../experiments", config.exp_name, "summery/")
 
     return config
-
-
-
-def coord_to_prob_dist(coord, layer):
-    x, y = coord
-    matrix = np.zeros(MATRIX_SIZE)
-    matrix[x, y, layer] = 1
-    matrix = np.rollaxis(matrix, 2, 0)
-    return matrix
