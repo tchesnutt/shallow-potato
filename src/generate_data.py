@@ -24,14 +24,6 @@ if percentage == "":
 file_count = 0
 num_g = 0
 
-# x_train, y_train = [], []
-# x_e, y_e = [], []
-# x_K, y_K = [], []
-# x_B, y_B = [], []
-# x_R, y_R = [], []
-# x_Q, y_Q = [], []
-# x_N, y_N = [], []
-
 for file_name in os.listdir("./data/games"):
     if file_name.endswith(".pgn"):
         train_games = []
@@ -50,7 +42,7 @@ for file_name in os.listdir("./data/games"):
                 train_games.append(game)
 
         trainer = TrainData(train_games)
-        validator = ValidateData(validate_games)
+        validator = TrainData(validate_games)
 
         trainer.process()
         validator.process()
@@ -59,15 +51,17 @@ for file_name in os.listdir("./data/games"):
             file_name = f"{file_type}_{file_count}"
             call = f"trainer.{file_type}"
 
-            print("Saving " + file_name)
-            training_file = open("./data/parsed/" + file_name, 'wb')
+            print("Saving train file: " + file_name)
+            training_file = open("./data/parsed/train/" + file_name, 'wb')
             pickle.dump(eval(call), training_file)
             training_file.close()
 
-        validation_name = f"valid_{file_count}"
-        print("Saving " + validation_name +"\n")
-        validation_file = open("./data/parsed/" + validation_name, 'wb')
-        pickle.dump(validator.x_valid, validation_file)
-        validation_file.close()
+            validation_name = f"{file_type}_{file_count}"
+            call = f"validator.{file_type}"
+
+            print("Saving valid file: " + validation_name)
+            validation_file = open("./data/parsed/validation/" + validation_name, 'wb')
+            pickle.dump(eval(call), validation_file)
+            validation_file.close()
 
         file_count += 1

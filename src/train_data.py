@@ -45,6 +45,8 @@ class TrainData:
                 piece = INDEX_TO_PIECE[index[0][0]]
 
                 m = np.rollaxis(m, 2, 0)
+                from_cart_flattened = flatten_coord(from_cart)
+                to_cart_flattened = flatten_coord(to_cart)
 
                 piece_x = "self." + piece + "_x"
                 piece_y = "self." + piece + "_y"
@@ -52,8 +54,8 @@ class TrainData:
                 piece_y = eval(piece_y)
 
                 self.picker_x.append(m)
-                self.picker_y.append(from_cart)
+                self.picker_y.append(from_cart_flattened)
                 piece_x.append(m)
-                piece_y.append(to_cart)
+                piece_y.append(to_cart_flattened)
                 
                 board.push(move)

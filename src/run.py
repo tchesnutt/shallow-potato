@@ -24,6 +24,8 @@ def init_models(model_key):
         models[k] = model
     return models
 
+
+
 def init_trainers(model_key):
     trainers = {}
     for k, v in model_key.items(): 
@@ -32,16 +34,22 @@ def init_trainers(model_key):
         trainers[k] = trainer
     return trainers
 
-def get_data_file(model_name):
+
+
+def get_data_files(model_name, t_or_v):
     files = []
-    for file_name in os.listdir("./data/parsed/"):
+    for file_name in os.listdir(f"./data/parsed/{t_or_v}/"):
         if file_name.startswith(model_name):
-            files.append("./data/parsed/" + file_name)
+            files.append(f"./data/parsed/{t_or_v}/" + file_name)
     return files
+
+
 
 def load_data_file(file_name):
     file = open(file_name, 'rb')
     return pickle.load(file)
+
+
 
 def parse_fileobjs(filenames):
     parsed_files = []
@@ -55,8 +63,10 @@ def parse_fileobjs(filenames):
     return parsed_files
 
     
+
 def sort_files(fileobj):
     return (fileobj["series"], fileobj["type"])
+
 
 
 if __name__ == "__main__":
@@ -68,24 +78,30 @@ if __name__ == "__main__":
     for model_name, model_instance in models.items():
         config_file = "./src/configs/" + model_key[model_name] + ".json"
         config = process_config(config_file)
-    
-        files = get_data_file(model_name)
-
         sess = tf.compat.v1.Session()
         model = model_instance(config)
+        
         trainer = trainers[model_name](sess, model, config)
+        trainer.prep_train()
+    
+        train_data = None
+        valid_data = None
 
-        parsed_fileobjs = parse_fileobjs(files)
+        train_files = get_data_files(model_name, 'train')
+        parsed_fileobjs = parse_fileobjs(train_files)
         sorted_files = sorted(parsed_fileobjs, key=sort_files)
         sorted_files = [file["filename"] for file in sorted_files]
-        
-        file_pairs = zip(sorted_files[::2], sorted_files[1::2])
-        
-        trainer.prep_train()
+        train_file_pairs = zip(sorted_files[::2], sorted_files[1::2])    
+    
+        valid_files = get_data_files(model_name, 'validation')
+        parsed_fileobjs = parse_fileobjs(valid_files)
+        sorted_files = sorted(parsed_fileobjs, key=sort_files)
+        sorted_files = [file["filename"] for file in sorted_files]
+        valid_file_pairs = zip(sorted_files[::2], sorted_files[1::2])
 
-        for pair in file_pairs:
-            data = (load_data_file(pair[0]), load_data_file(pair[1]))
-            trainer.train(data)
+        for pair in train_file_pairs:
+            trainer.train_data = (load_data_file(pair[0]), load_data_file(pair[1]))
+            trainer.train()
 
         # TODO  WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
         model.save(sess)
