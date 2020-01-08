@@ -1,5 +1,4 @@
 import os
-import pickle
 import tensorflow as tf
 
 from utils import *
@@ -45,12 +44,6 @@ def get_data_files(model_name, t_or_v):
 
 
 
-def load_data_file(file_name):
-    file = open(file_name, 'rb')
-    return pickle.load(file)
-
-
-
 def parse_fileobjs(filenames):
     parsed_files = []
     for filename in filenames:
@@ -83,9 +76,6 @@ if __name__ == "__main__":
         
         trainer = trainers[model_name](sess, model, config)
         trainer.prep_train()
-    
-        train_data = None
-        valid_data = None
 
         train_files = get_data_files(model_name, 'train')
         parsed_fileobjs = parse_fileobjs(train_files)
@@ -99,9 +89,7 @@ if __name__ == "__main__":
         sorted_files = [file["filename"] for file in sorted_files]
         valid_file_pairs = zip(sorted_files[::2], sorted_files[1::2])
 
-        for pair in train_file_pairs:
-            trainer.train_data = (load_data_file(pair[0]), load_data_file(pair[1]))
-            trainer.train()
+        trainer.train(train_file_pairs, valid_file_pairs)
 
         # TODO  WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
         model.save(sess)

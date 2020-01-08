@@ -1,6 +1,7 @@
 import os
 import chess.pgn
 import json
+import pickle
 import numpy as np
 from bunch import Bunch
 
@@ -160,3 +161,10 @@ def process_config(json_file):
     config.summery_dir = os.path.join("../experiments", config.exp_name, "summery/")
 
     return config
+
+
+
+def load_data_file(file_name):
+    file = open(file_name, 'rb')
+
+    return pickle.load(file)
