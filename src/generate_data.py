@@ -1,5 +1,6 @@
 import os
 import pickle
+import json
 
 from train_data import *
 from validate_data import *
@@ -23,6 +24,8 @@ if percentage == "":
 
 file_count = 0
 num_g = 0
+train_file_len = {}
+valid_file_len = {}
 
 for file_name in os.listdir("./data/games"):
     if file_name.endswith(".pgn"):
@@ -52,16 +55,29 @@ for file_name in os.listdir("./data/games"):
             call = f"trainer.{file_type}"
 
             print("Saving train file: " + file_name)
+            sample_list = eval(call)
+            sample_len = len(sample_list)
+            train_file_len[file_name] = sample_len
             training_file = open("./data/parsed/train/" + file_name, 'wb')
-            pickle.dump(eval(call), training_file)
+            pickle.dump(sample_list, training_file)
             training_file.close()
+
 
             validation_name = f"{file_type}_{file_count}"
             call = f"validator.{file_type}"
 
             print("Saving valid file: " + validation_name)
+            sample_list = eval(call)            
+            sample_len = len(sample_list)
+            valid_file_len[validation_name] = sample_len
             validation_file = open("./data/parsed/validation/" + validation_name, 'wb')
-            pickle.dump(eval(call), validation_file)
+            pickle.dump(sample_list, validation_file)
             validation_file.close()
 
         file_count += 1
+
+with open('./data/parsed/train/train_file_len.json', "w") as t_fp:
+    json.dump(train_file_len, t_fp)
+
+with open('./data/parsed/validation/valid_file_len.json', "w") as v_fp:
+    json.dump(valid_file_len, v_fp)
