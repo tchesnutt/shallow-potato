@@ -19,13 +19,12 @@ class PieceTrainer(Train):
     def train(self, train_file_pairs, valid_file_pairs):
         train_file_pairs = list(train_file_pairs)
         valid_file_pairs = list(valid_file_pairs)
+        
         train_gen = self.generate_data_from_file_pair(train_file_pairs)
         valid_gen = self.generate_data_from_file_pair(valid_file_pairs)
 
-        train_SPE = sum(1 for _ in train_file_pairs)
-        valid_SPE = sum(1 for _ in valid_file_pairs)
-        print(train_SPE)
-        print(valid_SPE)
+        train_SPE = self.get_num_samples_file_pairs(train_file_pairs, './data/parsed/train/train_file_len.json')
+        valid_SPE = self.get_num_samples_file_pairs(valid_file_pairs, './data/parsed/validation/valid_file_len.json')
 
         history = self.model.model.fit_generator(
             train_gen,
