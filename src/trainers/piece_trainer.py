@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 
 from trainers.train import Train
-from utils import load_data_file
+from utils import load_data_file, flatten_coord_to_target_array, TRAIN_FILE_LEN_PATH, VALID_FILE_LEN_PATH
 
 
 
@@ -23,8 +23,8 @@ class PieceTrainer(Train):
         train_gen = self.generate_data_from_file_pair(train_file_pairs)
         valid_gen = self.generate_data_from_file_pair(valid_file_pairs)
 
-        train_SPE = self.get_num_samples_file_pairs(train_file_pairs, './data/parsed/train/train_file_len.json')
-        valid_SPE = self.get_num_samples_file_pairs(valid_file_pairs, './data/parsed/validation/valid_file_len.json')
+        train_SPE = self.get_num_samples_file_pairs(train_file_pairs, TRAIN_FILE_LEN_PATH)
+        valid_SPE = self.get_num_samples_file_pairs(valid_file_pairs, VALID_FILE_LEN_PATH)
 
         history = self.model.model.fit_generator(
             train_gen,
@@ -40,14 +40,13 @@ class PieceTrainer(Train):
         counter = 0
         while True:
             file_pair = file_pairs[counter]
-            print(file_pair)
             counter = (counter + 1) % len(file_pairs)
 
-            x, y = (load_data_file(file_pair[0]), load_data_file(file_pair[1]))
-            # TODO: investigate having to np.array the inputs. This feels strange, should already be numpy arrays.
+            x, y_flat = (load_data_file(file_pair[0]), load_data_file(file_pair[1]))
+            y = flatten_coord_to_target_array(y_flat)
+
+            # TODO: investigate having to np.array the inputs. This feels strange.
             x = np.asarray(x)
-            x = np.expand_dims(x, axis=1)
             y = np.asarray(y)
 
-            # print(x, y)
             yield (x, y)

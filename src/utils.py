@@ -48,11 +48,14 @@ TRAIN_FILE_TYPES = ['picker_x', 'P_x', 'K_x', 'B_x', 'R_x', 'Q_x',
 
 MATRIX_SIZE = (8, 8, 6)
 
+TRAIN_FILE_LEN_PATH = './data/parsed/train/train_file_len.json'
+
+VALID_FILE_LEN_PATH = './data/parsed/validation/valid_file_len.json'
+
 
 
 def parse_games(file_name):
-    """
-    return type list[...games]
+    """return type list[...games]
     takes in a string and parses all games in that file
     """
     pgn_file = open(file_name, encoding='utf-8', errors='replace')
@@ -66,8 +69,7 @@ def parse_games(file_name):
 
 
 def cartesian_to_uci_cell(coordinates):
-    """
-    return type string
+    """return type string
     ex.
         coordinates = [0, 0]
         result = a8
@@ -77,8 +79,7 @@ def cartesian_to_uci_cell(coordinates):
 
 
 def uci_cell_to_cartesian(uci_cell):
-    """
-    ex. 
+    """ex. 
         uci_cell = f8
         result = (5, 0)
     """
@@ -87,8 +88,7 @@ def uci_cell_to_cartesian(uci_cell):
 
 
 def board_to_matrix(board):
-    """
-    return type numpy arraylike
+    """return type numpy arraylike
     takes in a chess.board and returns a 8,8,6 representation of the board
     """
     board = np.array(list(str(board).replace('\n', '').replace(' ', ''))).reshape((8, 8))
@@ -109,9 +109,8 @@ def board_to_matrix(board):
 
 
 def flip(matrix):
-    """
-    returns a matrix rotated about the horizontal plane
-    also inverts the peice designation between white and black
+    """returns a matrix rotated about the horizontal plane
+    also inverts the peice designation betweeflatten_coord_to_target_arrayn white and black
     """
     matrix = matrix[::-1, :, :]
     whites = np.where(matrix == 1)
@@ -145,6 +144,15 @@ def coord_to_prob_dist(coord, layer):
 def flatten_coord(coord):
 	return ((8 * coord[0]) + coord[1])
 
+
+
+def flatten_coord_to_target_array(flat_coord_list):
+    target = []
+    for flat_coord in flat_coord_list:
+        target_array = np.zeros(64)
+        target_array[flat_coord] = 1
+        target.append(target_array)
+    return target
 
 
 def get_config_from_json(json_file):
