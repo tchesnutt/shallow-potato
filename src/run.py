@@ -3,7 +3,6 @@ import tensorflow as tf
 
 from utils import *
 
-
 model_key = {
     'P': 'piece',
     # 'N': 'piece',

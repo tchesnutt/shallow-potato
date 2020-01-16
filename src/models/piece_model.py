@@ -11,6 +11,7 @@ class Piece(Model):
         self.init_saver()
 
 
+
     def construct(self):
         model = tf.keras.Sequential()
         model.add(tf.keras.layers.Conv2D(64, (3, 3), strides=1,  activation='relu', input_shape=(6, 8, 8), padding="same", data_format="channels_first", use_bias=False))
@@ -21,9 +22,12 @@ class Piece(Model):
         self.model = model
 
 
+
     def init_saver(self):
         return NotImplemented
 
+
+
     def save(self, sess):
-        # TODO: put model name in here
         print('Saving model...')
+        self.model.save()

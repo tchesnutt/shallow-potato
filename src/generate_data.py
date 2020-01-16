@@ -51,7 +51,7 @@ for file_name in os.listdir("./data/games"):
         validator.process()
 
         for file_type in TRAIN_FILE_TYPES:
-            file_name = f"{file_type}_{file_count}"
+            file_name = f"{file_type}_T{file_count}"
             call = f"trainer.{file_type}"
 
             print("Saving train file: " + file_name)
@@ -62,8 +62,7 @@ for file_name in os.listdir("./data/games"):
             pickle.dump(sample_list, training_file)
             training_file.close()
 
-
-            validation_name = f"{file_type}_{file_count}"
+            validation_name = f"{file_type}_V{file_count}"
             call = f"validator.{file_type}"
 
             print("Saving valid file: " + validation_name)
