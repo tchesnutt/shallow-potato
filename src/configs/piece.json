@@ -1,8 +1,8 @@
 
 {
     "exp_name": "init_scrub_mode",
-	"path": "./data/models",
+	"save_path": "./data/models/",
     "learning_rate": 0.001,
-    "max_to_keep": 100,
-	"train_step": 1
+    "train_step": 1,
+    "epochs": 5
 }

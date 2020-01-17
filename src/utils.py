@@ -155,6 +155,7 @@ def flatten_coord_to_target_array(flat_coord_list):
     return target
 
 
+
 def get_config_from_json(json_file):
     with open(json_file, 'r') as c_file:
         c_dict = json.load(c_file)
@@ -166,8 +167,6 @@ def get_config_from_json(json_file):
 
 def process_config(json_file):
     config, _ = get_config_from_json(json_file)
-    config.summery_dir = os.path.join("../experiments", config.exp_name, "summery/")
-
     return config
 
 

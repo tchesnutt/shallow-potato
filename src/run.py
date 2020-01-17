@@ -3,6 +3,8 @@ import tensorflow as tf
 
 from utils import *
 
+
+
 model_key = {
     'P': 'piece',
     # 'N': 'piece',
@@ -12,6 +14,7 @@ model_key = {
     # 'K': 'piece',
     # 'picker': 'file_name'
 }
+
 
 
 def init_models(model_key):
@@ -70,10 +73,9 @@ if __name__ == "__main__":
     for model_name, model_instance in models.items():
         config_file = "./src/configs/" + model_key[model_name] + ".json"
         config = process_config(config_file)
-        sess = tf.compat.v1.Session()
         model = model_instance(config)
         
-        trainer = trainers[model_name](sess, model, config)
+        trainer = trainers[model_name](model, config)
         trainer.prep_train()
 
         train_files = get_data_files(model_name, 'train')
@@ -91,4 +93,4 @@ if __name__ == "__main__":
         trainer.train(train_file_pairs, valid_file_pairs)
 
         # TODO  WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
-        model.save(sess)
+        model.save()

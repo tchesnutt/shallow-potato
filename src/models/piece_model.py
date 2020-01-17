@@ -8,7 +8,6 @@ class Piece(Model):
     def __init__(self, config):
         super(Piece, self).__init__(config)
         self.construct()
-        self.init_saver()
 
 
 
@@ -23,11 +22,7 @@ class Piece(Model):
 
 
 
-    def init_saver(self):
-        return NotImplemented
-
-
-
-    def save(self, sess):
+    def save(self):
         print('Saving model...')
-        self.model.save()
+        path = self.config.save_path + self.config.exp_name
+        self.model.save(path)

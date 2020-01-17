@@ -8,14 +8,13 @@ from utils import load_data_file, flatten_coord_to_target_array, TRAIN_FILE_LEN_
 
 
 class PieceTrainer(Train):
-    def __init__(self, sess, model, config):
+    def __init__(self, model, config):
         super(PieceTrainer, self).__init__(model, config)
-        self.sess = sess
 
 
     
     def prep_train(self):
-        self.model.model.compile(loss='mean_squared_error', optimizer='sgd')
+        self.model.model.compile(loss='mean_squared_error', optimizer='sgd', metrics=["accuracy"])
 
 
 
@@ -31,7 +30,7 @@ class PieceTrainer(Train):
         
         history = self.model.model.fit_generator(
             train_gen,
-            epochs=1,
+            epochs=self.config.epochs,
             steps_per_epoch=train_SPE,
             validation_data=valid_gen,
             validation_steps=valid_SPE)
@@ -54,5 +53,5 @@ class PieceTrainer(Train):
 
             yield (x, y)
 
-            if counter <= len(file_pairs):
+            if counter < len(file_pairs):
                 counter += 1
