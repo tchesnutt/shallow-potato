@@ -53,5 +53,7 @@ class PieceTrainer(Train):
 
             yield (x, y)
 
-            if counter < len(file_pairs):
+            if counter < len(file_pairs) - 1:
                 counter += 1
+            else:
+                counter = 0

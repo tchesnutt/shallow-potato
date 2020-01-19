@@ -46,14 +46,14 @@ def get_data_files(model_name, t_or_v):
 
 
 
-def parse_fileobjs(filenames):
+def parse_fileobjs(file_names):
     parsed_files = []
-    for filename in filenames:
-        model, something, series = filename.split('_')
+    for filename in file_names:
+        model, data_type, _, series = filename.split('_')
         parsed_files.append({
             "filename": filename,
             "series": series,
-            "type": something,
+            "type": data_type,
         })
     return parsed_files
 
