@@ -48,13 +48,13 @@ class TrainData:
                 from_cart_flattened = flatten_coord(from_cart)
                 to_cart_flattened = flatten_coord(to_cart)
 
-                piece_x = "self." + piece + "_x"
-                piece_y = "self." + piece + "_y"
+                piece_x = "self." + piece + "_X"
+                piece_y = "self." + piece + "_Y"
                 piece_x = eval(piece_x)
                 piece_y = eval(piece_y)
 
-                self.picker_x.append(m)
-                self.picker_y.append(from_cart_flattened)
+                self.Picker_X.append(m)
+                self.Picker_Y.append(from_cart_flattened)
                 piece_x.append(m)
                 piece_y.append(to_cart_flattened)
                 
