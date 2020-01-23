@@ -34,8 +34,13 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
             else:
                 train_games.append(game)
 
+        del games
+
         trainer = TrainData(train_games)
         validator = TrainData(validate_games)
+
+        del train_games
+        del validate_games
 
         trainer.process()
         validator.process()
@@ -62,6 +67,9 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
             validation_file = open("./data/parsed/validation/" + validation_name, 'wb')
             pickle.dump(sample_list, validation_file)
             validation_file.close()
+
+        del trainer
+        del validator
 
     print(f"Thread {name} ending")
 
