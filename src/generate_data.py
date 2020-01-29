@@ -4,6 +4,7 @@ import json
 import time
 import itertools
 from multiprocessing.dummy import Pool as tp
+from pympler import muppy, summary
 
 from train_data import *
 from validate_data import *
@@ -45,6 +46,18 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
         trainer.process()
         validator.process()
 
+        all_obj = muppy.get_objects()
+        sum1 = summary.summarize(all_objects)
+
+
+        summary.print_(sum1)
+
+        dataframes = [ao for ao in all_objects if isinstance(ao, pd.DataFrame)]
+        print('hi')
+        for d in dataframes:
+            print(d.columns.values)
+            print(len(d))
+
         for file_type in TRAIN_FILE_TYPES:
             train_file_name = f"{file_type}_T_{file_name}"
             call = f"trainer.{file_type}"
@@ -68,6 +81,7 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
             pickle.dump(sample_list, validation_file)
             validation_file.close()
 
+
         del trainer
         del validator
 
@@ -84,7 +98,7 @@ if __name__ == "__main__":
     train_file_len = {}
     valid_file_len = {}
     game_files = os.listdir("./data/openings")
-    pool_number = 4
+    pool_number = 3
     args = zip(game_files, itertools.repeat(percentage), itertools.repeat(train_file_len), itertools.repeat(valid_file_len), itertools.count(1)) 
     pool = tp(pool_number)
     start_time = time.time()
