@@ -5,13 +5,24 @@ from utils import *
 
 
 class TrainData:
+    __slots__ = TRAIN_FILE_TYPES
     def __init__(self, games):
         self.games = games
         self.initData()
 
-    def initData(self):
+
+
+    def init_data(self):
         for data_name in TRAIN_FILE_TYPES:
             self.__setattr__(data_name, [])
+
+
+
+    def clear_data(self):
+        for data_name in TRAIN_FILE_TYPES:
+            del self.__dict__[data_name]
+
+
 
     def process(self):
         for _, game in enumerate(self.games):

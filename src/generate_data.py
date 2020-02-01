@@ -3,8 +3,8 @@ import pickle
 import json
 import time
 import itertools
+import gc
 from multiprocessing.dummy import Pool as tp
-from pympler import muppy, summary
 
 from train_data import *
 from validate_data import *
@@ -46,18 +46,6 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
         trainer.process()
         validator.process()
 
-        all_obj = muppy.get_objects()
-        sum1 = summary.summarize(all_objects)
-
-
-        summary.print_(sum1)
-
-        dataframes = [ao for ao in all_objects if isinstance(ao, pd.DataFrame)]
-        print('hi')
-        for d in dataframes:
-            print(d.columns.values)
-            print(len(d))
-
         for file_type in TRAIN_FILE_TYPES:
             train_file_name = f"{file_type}_T_{file_name}"
             call = f"trainer.{file_type}"
@@ -82,8 +70,13 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
             validation_file.close()
 
 
+        trainer.clear_data()
+        validator.clear_data()
         del trainer
         del validator
+
+        n = gc.collect()
+        print("Number of unreachable objects collected by GC:", n)
 
     print(f"Thread {name} ending")
 
