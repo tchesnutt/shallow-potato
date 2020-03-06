@@ -1,9 +1,9 @@
 import os
-import pickle
 import json
 import time
 import itertools
 import gc
+import pickle as pkl
 from multiprocessing.dummy import Pool as tp
 
 from train_data import *
@@ -25,6 +25,7 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
         validate_games = []
 
         games = parse_games("./data/openings/" + file_name)
+
         count = len(games)
         print(f"Parsing: {file_name}, {count} games")
 
@@ -55,7 +56,7 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
             sample_len = len(sample_list)
             train_file_len[train_file_name] = sample_len
             training_file = open("./data/parsed/train/" + train_file_name, 'wb')
-            pickle.dump(sample_list, training_file)
+            pkl.dump(sample_list, training_file)
             training_file.close()
 
             validation_name = f"{file_type}_V_{file_name}"
@@ -66,7 +67,7 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
             sample_len = len(sample_list)
             valid_file_len[validation_name] = sample_len
             validation_file = open("./data/parsed/validation/" + validation_name, 'wb')
-            pickle.dump(sample_list, validation_file)
+            pkl.dump(sample_list, validation_file)
             validation_file.close()
 
 
@@ -82,6 +83,7 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
 
 
 if __name__ == "__main__":
+    pkl.fast = True
     percentage = input(
         'Enter what percent of data to use for validation.\nHit ENTER to default to 20\n')
     if percentage == "":
@@ -91,7 +93,7 @@ if __name__ == "__main__":
     train_file_len = {}
     valid_file_len = {}
     game_files = os.listdir("./data/openings")
-    pool_number = 3
+    pool_number = 4
     args = zip(game_files, itertools.repeat(percentage), itertools.repeat(train_file_len), itertools.repeat(valid_file_len), itertools.count(1)) 
     pool = tp(pool_number)
     start_time = time.time()
