@@ -44,7 +44,6 @@ class PieceTrainer(Train):
         while True:
             file_pair = file_pairs[counter]
             x, y_flat = (load_data_file(file_pair[0]), load_data_file(file_pair[1]))
-
             y = flatten_coord_to_target_array(y_flat)
 
             # TODO: investigate having to np.array the inputs. This feels strange.

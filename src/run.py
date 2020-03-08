@@ -37,10 +37,10 @@ def init_trainers(model_key):
 
 
 
-def get_data_files(model_name, t_or_v):
+def get_data_files(model_type, t_or_v):
     files = []
     for file_name in os.listdir(f"./data/parsed/{t_or_v}/"):
-        if file_name.startswith(model_name):
+        if file_name.split("_")[0] == model_type:
             files.append(f"./data/parsed/{t_or_v}/" + file_name)
     return files
 
@@ -70,21 +70,22 @@ if __name__ == "__main__":
     models = init_models(model_key)
     trainers = init_trainers(model_key)
 
-    for model_name, model_instance in models.items():
-        config_file = "./src/configs/" + model_key[model_name] + ".json"
+    for model_type, model_instance in models.items():
+        config_file = "./src/configs/" + model_key[model_type] + ".json"
         config = process_config(config_file)
         model = model_instance(config)
         
-        trainer = trainers[model_name](model, config)
+        trainer = trainers[model_type](model, config)
         trainer.prep_train()
 
-        train_files = get_data_files(model_name, 'train')
+        train_files = get_data_files(model_type, 'train')
         parsed_fileobjs = parse_fileobjs(train_files)
         sorted_files = sorted(parsed_fileobjs, key=sort_files)
+        print(sorted_files)
         sorted_files = [file["filename"] for file in sorted_files]
         train_file_pairs = zip(sorted_files[::2], sorted_files[1::2])    
     
-        valid_files = get_data_files(model_name, 'validation')
+        valid_files = get_data_files(model_type, 'validation')
         parsed_fileobjs = parse_fileobjs(valid_files)
         sorted_files = sorted(parsed_fileobjs, key=sort_files)
         sorted_files = [file["filename"] for file in sorted_files]
