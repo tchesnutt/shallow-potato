@@ -4,5 +4,6 @@
 	"save_path": "./data/models/",
     "learning_rate": 0.001,
     "train_step": 1,
-    "epochs": 5
+    "epochs": 5,
+    "batch_size": 1000
 }

@@ -81,7 +81,6 @@ if __name__ == "__main__":
         train_files = get_data_files(model_type, 'train')
         parsed_fileobjs = parse_fileobjs(train_files)
         sorted_files = sorted(parsed_fileobjs, key=sort_files)
-        print(sorted_files)
         sorted_files = [file["filename"] for file in sorted_files]
         train_file_pairs = zip(sorted_files[::2], sorted_files[1::2])    
     

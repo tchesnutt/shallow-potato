@@ -1,9 +1,10 @@
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
+import json
 
 from trainers.train import Train
-from utils import load_data_file, flatten_coord_to_target_array, TRAIN_FILE_LEN_PATH, VALID_FILE_LEN_PATH
+from utils import load_data_file, flatten_coord_to_target_array, get_data_file_sample_length
 
 
 
@@ -24,10 +25,10 @@ class PieceTrainer(Train):
         
         train_gen = self.generate_data_from_file_pair(train_file_pairs)
         valid_gen = self.generate_data_from_file_pair(valid_file_pairs)
-        
-        train_SPE = sum(1 for _ in train_file_pairs)
-        valid_SPE = sum(1 for _ in valid_file_pairs)
-        
+
+        train_SPE = sum(get_data_file_sample_length('t', x) for x in train_file_pairs)
+        valid_SPE = sum(get_data_file_sample_length('t', x) for x in valid_file_pairs)
+
         history = self.model.model.fit_generator(
             train_gen,
             epochs=self.config.epochs,
@@ -40,9 +41,10 @@ class PieceTrainer(Train):
 
 
     def generate_data_from_file_pair(self, file_pairs):
-        counter = 0
+        file_counter, sample_counter = 0, 0
+        batch_size = self.config.batch_size
         while True:
-            file_pair = file_pairs[counter]
+            file_pair = file_pairs[file_counter]
             x, y_flat = (load_data_file(file_pair[0]), load_data_file(file_pair[1]))
             y = flatten_coord_to_target_array(y_flat)
 
@@ -50,9 +52,13 @@ class PieceTrainer(Train):
             x = np.asarray(x)
             y = np.asarray(y)
 
-            yield (x, y)
-
-            if counter < len(file_pairs) - 1:
-                counter += 1
-            else:
-                counter = 0
+            stop_index = sample_counter + batch_size
+            length = len(x)
+            if stop_index > length:
+                yield (x[sample_counter:], y[sample_counter:])
+                if file_counter < len(file_pairs) - 1:
+                    file_counter += 1
+                sample_counter = 0
+            else: 
+                yield (x[sample_counter:stop_index], y[sample_counter:stop_index])
+                sample_counter += batch_size

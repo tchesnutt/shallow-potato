@@ -3,9 +3,9 @@ import tensorflow as tf
 
 
 class Train:
+    __slots__ = ['model', 'config']
     def __init__(self, model, config):
         self.model = model
-        self.data = None
         self.config = config
 
 

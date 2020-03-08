@@ -173,5 +173,19 @@ def process_config(json_file):
 
 def load_data_file(file_name):
     file = open(file_name, 'rb')
-
     return pickle.load(file)
+
+
+
+def get_data_file_sample_length(sample_type, file_path):
+    if sample_type == 't':
+        file_lens_f = open(TRAIN_FILE_LEN_PATH, 'r')
+        file_lens = json.loads(file_lens_f.read())
+    elif sample_type == 'v':
+        file_lens_f = open(VALID_FILE_LEN_PATH, 'r')
+        file_lens = json.loads(file_lens_f.read())
+    else:
+        print("UH OH")
+    
+    file_name = file_path[0].split("/")[-1]    
+    return file_lens[file_name]
