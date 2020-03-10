@@ -7,12 +7,12 @@ from utils import *
 
 model_key = {
     'P': 'piece',
-    # 'N': 'piece',
-    # 'B': 'piece',
-    # 'R': 'piece',
-    # 'Q': 'piece',
-    # 'K': 'piece',
-    # 'picker': 'file_name'
+    'N': 'piece',
+    'B': 'piece',
+    'R': 'piece',
+    'Q': 'piece',
+    'K': 'piece',
+    'picker': 'piece'
 }
 
 

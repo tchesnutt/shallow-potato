@@ -5,10 +5,10 @@ from utils import *
 
 
 class TrainData:
-    __slots__ = TRAIN_FILE_TYPES
+    __slots__ = TRAIN_DATA_SLOTS
     def __init__(self, games):
         self.games = games
-        self.initData()
+        self.init_data()
 
 
 

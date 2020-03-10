@@ -1,7 +1,7 @@
 import os
 import chess.pgn
 import json
-import pickle
+import hickle
 import numpy as np
 from bunch import Bunch
 
@@ -45,6 +45,9 @@ UCI_CELL_TO_CART = {
 
 TRAIN_FILE_TYPES = ['Picker_X', 'P_X', 'K_X', 'B_X', 'R_X', 'Q_X',
                     'N_X', 'Picker_Y', 'P_Y', 'K_Y', 'B_Y', 'R_Y', 'Q_Y', 'N_Y']
+
+TRAIN_DATA_SLOTS = ['Picker_X', 'P_X', 'K_X', 'B_X', 'R_X', 'Q_X',
+                    'N_X', 'Picker_Y', 'P_Y', 'K_Y', 'B_Y', 'R_Y', 'Q_Y', 'N_Y', 'games']
 
 MATRIX_SIZE = (8, 8, 6)
 
@@ -110,7 +113,7 @@ def board_to_matrix(board):
 
 def flip(matrix):
     """returns a matrix rotated about the horizontal plane
-    also inverts the peice designation betweeflatten_coord_to_target_arrayn white and black
+    also inverts the piece designation betweeflatten_coord_to_target_array white and black
     """
     matrix = matrix[::-1, :, :]
     whites = np.where(matrix == 1)
@@ -173,7 +176,7 @@ def process_config(json_file):
 
 def load_data_file(file_name):
     file = open(file_name, 'rb')
-    return pickle.load(file)
+    return hickle.load(file)
 
 
 

@@ -3,11 +3,10 @@ import json
 import time
 import itertools
 import gc
-import pickle as pkl
+import hickle as pkl
 from multiprocessing.dummy import Pool as tp
 
 from train_data import *
-from validate_data import *
 from utils import *
 
 """Generating data
