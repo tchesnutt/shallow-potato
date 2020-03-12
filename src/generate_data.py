@@ -3,7 +3,7 @@ import json
 import time
 import itertools
 import gc
-import hickle as pkl
+import pickle as pkl
 from multiprocessing.dummy import Pool as tp
 
 from train_data import *
@@ -49,7 +49,6 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
         for file_type in TRAIN_FILE_TYPES:
             train_file_name = f"{file_type}_T_{file_name}"
             call = f"trainer.{file_type}"
-
             print("Saving train file: " + train_file_name)
             sample_list = eval(call)
             sample_len = len(sample_list)
@@ -60,7 +59,6 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
 
             validation_name = f"{file_type}_V_{file_name}"
             call = f"validator.{file_type}"
-
             print("Saving valid file: " + validation_name)
             sample_list = eval(call)            
             sample_len = len(sample_list)
@@ -69,9 +67,6 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
             pkl.dump(sample_list, validation_file)
             validation_file.close()
 
-
-        trainer.clear_data()
-        validator.clear_data()
         del trainer
         del validator
 
@@ -92,7 +87,7 @@ if __name__ == "__main__":
     train_file_len = {}
     valid_file_len = {}
     game_files = os.listdir("./data/openings")
-    pool_number = 4
+    pool_number = 2
     args = zip(game_files, itertools.repeat(percentage), itertools.repeat(train_file_len), itertools.repeat(valid_file_len), itertools.count(1)) 
     pool = tp(pool_number)
     start_time = time.time()

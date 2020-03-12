@@ -18,12 +18,6 @@ class TrainData:
 
 
 
-    def clear_data(self):
-        for data_name in TRAIN_FILE_TYPES:
-            del self.__dict__[data_name]
-
-
-
     def process(self):
         for _, game in enumerate(self.games):
             board = chess.Board()
