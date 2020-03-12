@@ -23,7 +23,7 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
         train_games = []
         validate_games = []
 
-        games = parse_games("./data/openings/" + file_name)
+        games = parse_games("./data/games/" + file_name)
 
         count = len(games)
         print(f"Parsing: {file_name}, {count} games")
@@ -86,8 +86,8 @@ if __name__ == "__main__":
 
     train_file_len = {}
     valid_file_len = {}
-    game_files = os.listdir("./data/openings")
-    pool_number = 2
+    game_files = os.listdir("./data/games")
+    pool_number = 1
     args = zip(game_files, itertools.repeat(percentage), itertools.repeat(train_file_len), itertools.repeat(valid_file_len), itertools.count(1)) 
     pool = tp(pool_number)
     start_time = time.time()

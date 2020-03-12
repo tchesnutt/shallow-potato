@@ -1,7 +1,7 @@
 import os
 import chess.pgn
 import json
-import hickle
+import pickle as pkl
 import numpy as np
 from bunch import Bunch
 
@@ -176,7 +176,7 @@ def process_config(json_file):
 
 def load_data_file(file_name):
     file = open(file_name, 'rb')
-    return hickle.load(file)
+    return pkl.load(file)
 
 
 

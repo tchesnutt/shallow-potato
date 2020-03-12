@@ -65,7 +65,7 @@ def sort_files(fileobj):
 
 
 if __name__ == "__main__":
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+    # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
     models = init_models(model_key)
     trainers = init_trainers(model_key)

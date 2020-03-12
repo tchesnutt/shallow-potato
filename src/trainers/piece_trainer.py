@@ -27,7 +27,7 @@ class PieceTrainer(Train):
         valid_gen = self.generate_data_from_file_pair(valid_file_pairs)
 
         train_SPE = sum(get_data_file_sample_length('t', x) for x in train_file_pairs)
-        valid_SPE = sum(get_data_file_sample_length('t', x) for x in valid_file_pairs)
+        valid_SPE = sum(get_data_file_sample_length('v', x) for x in valid_file_pairs)
 
         history = self.model.model.fit_generator(
             train_gen,
