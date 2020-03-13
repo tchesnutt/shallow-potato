@@ -29,6 +29,16 @@ class PieceTrainer(Train):
         train_SPE = sum(get_data_file_sample_length('t', x) for x in train_file_pairs)
         valid_SPE = sum(get_data_file_sample_length('v', x) for x in valid_file_pairs)
 
+        if train_SPE % 1000 == 0:
+            train_SPE /= 1000
+        else:
+            train_SPE = train_SPE / 1000 + 1
+
+        if valid_SPE % 1000 == 0:
+            valid_SPE /= 1000
+        else:
+            valid_SPE = valid_SPE / 1000 + 1
+
         history = self.model.model.fit_generator(
             train_gen,
             epochs=self.config.epochs,

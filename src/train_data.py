@@ -49,7 +49,6 @@ class TrainData:
                 index = np.where(m[from_cart] != 0)
                 piece = INDEX_TO_PIECE[index[0][0]]
 
-                m = np.rollaxis(m, 2, 0)
                 from_cart_flattened = flatten_coord(from_cart)
                 to_cart_flattened = flatten_coord(to_cart)
 
