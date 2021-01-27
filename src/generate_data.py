@@ -23,7 +23,7 @@ def game_file_parser(file_name, percentage, train_file_len, valid_file_len, name
         train_games = []
         validate_games = []
 
-        games = parse_games("./data/games/" + file_name)
+        games = parse_games(RAW_DATA_LOC + file_name)
 
         count = len(games)
         print(f"Parsing: {file_name}, {count} games")
