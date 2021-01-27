@@ -55,6 +55,8 @@ TRAIN_FILE_LEN_PATH = './data/parsed/train/train_file_len.json'
 
 VALID_FILE_LEN_PATH = './data/parsed/validation/valid_file_len.json'
 
+RAW_DATA_LOC = './data/games/'
+
 
 
 def parse_games(file_name):
