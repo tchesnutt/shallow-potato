@@ -1,22 +1,28 @@
 import numpy as np
 import chess
 
-from utils import *
+from utils import (
+    TRAIN_DATA_SLOTS,
+    TRAIN_FILE_TYPES,
+    INDEX_TO_PIECE,
+    uci_cell_to_cartesian,
+    board_to_matrix,
+    flip,
+    flip_cart_coords,
+    flatten_coord,
+)
 
 
 class TrainData:
     __slots__ = TRAIN_DATA_SLOTS
+
     def __init__(self, games):
         self.games = games
         self.init_data()
 
-
-
     def init_data(self):
         for data_name in TRAIN_FILE_TYPES:
             self.__setattr__(data_name, [])
-
-
 
     def process(self):
         for _, game in enumerate(self.games):
@@ -28,7 +34,7 @@ class TrainData:
                 # black winner
                 winner = 0
             else:
-                # white winner
+                # white winneruci_cell_to_cartesian
                 winner = 1
 
             for m_i, move in enumerate(moves):
@@ -37,8 +43,10 @@ class TrainData:
                 uci_move = move.uci()
 
                 from_uci, to_uci = uci_move[:2], uci_move[2:4]
-                from_cart, to_cart = uci_cell_to_cartesian(
-                    from_uci), uci_cell_to_cartesian(to_uci)
+                from_cart, to_cart = (
+                    uci_cell_to_cartesian(from_uci),
+                    uci_cell_to_cartesian(to_uci),
+                )
                 m = board_to_matrix(board)
 
                 if winner == 0:
@@ -61,5 +69,5 @@ class TrainData:
                 self.Picker_Y.append(from_cart_flattened)
                 piece_x.append(m)
                 piece_y.append(to_cart_flattened)
-                
+
                 board.push(move)
